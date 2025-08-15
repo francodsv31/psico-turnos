@@ -35,11 +35,13 @@ export default function ModalReserva({abierto, alCerrar, psicologo, iso, tema, m
   const [mostrarChoqueHora, setMostrarChoqueHora] = useState(false)
 
   if (!abierto || !psicologo || !iso) return null
+  const ps = psicologo
+  const isoStr = iso
   const cuando = new Date(iso)
 
   function tieneReservaMismoDia(){
     const reservas = obtenerReservas()
-    return reservas.some(r => r.correoPaciente === correo && mismaFechaLocal(r.inicioISO, iso))
+    return reservas.some(r => r.correoPaciente === correo && mismaFechaLocal(r.inicioISO, isoStr))
   }
   function existeChoqueExacto(){
     const reservas = obtenerReservas()
@@ -50,15 +52,15 @@ export default function ModalReserva({abierto, alCerrar, psicologo, iso, tema, m
     guardarUsuario({ nombre, correo })
     guardarReserva({
       id: Math.random().toString(36).slice(2),
-      idPsicologo: psicologo.id,
-      nombrePsicologo: psicologo.nombre,
+      idPsicologo: ps.id,
+      nombrePsicologo: ps.nombre,
       tema,
       modalidad,
       inicioISO: iso!,
       correoPaciente: correo,
       creadoEn: new Date().toISOString()
     })
-    alReservar({ psicologo: psicologo.nombre, modalidad, iso: iso! })
+    alReservar({ psicologo: ps.nombre, modalidad, iso: iso! })
     setMostrarAlertaDia(false)
     alCerrar()
   }

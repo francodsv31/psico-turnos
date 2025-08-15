@@ -1,7 +1,14 @@
 
 import React from 'react'
 import MisReservas from './MisReservas'
-export default function ModalMisReservas({abierto, alCerrar}:{abierto:boolean; alCerrar:()=>void}){
+
+type Props = {
+  abierto: boolean
+  alCerrar: () => void
+  alDespuesDeCancelar: () => void
+}
+
+export default function ModalMisReservas({ abierto, alCerrar, alDespuesDeCancelar }: Props) {
   if(!abierto) return null
   return (
     <div className="modal" onClick={alCerrar}>
